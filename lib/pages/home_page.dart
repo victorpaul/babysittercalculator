@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:babysittercalculator/constants.dart';
+import 'package:babysittercalculator/extensions/widget_put_right.dart';
+import 'package:babysittercalculator/services/notification_service.dart';
 import 'package:babysittercalculator/utils/calculations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -93,6 +98,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
+  void onPressedBar() {
+    final randIndex = Random().nextInt(positivePhrases.length - 1);
+    NotificationService.showSnackBar("Positive phrase: \"${positivePhrases[randIndex]}\"");
+  }
+
   @override
   Widget build(BuildContext context) {
     final content = dataReady ? drawBody() : const Center(child: Text("Loading"));
@@ -100,15 +110,42 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+              icon: const Icon(
+                Icons.beach_access,
+                color: Colors.deepPurpleAccent,
+              ),
+              onPressed: onPressedBar),
+          IconButton(
+              icon: const Icon(
+                Icons.audiotrack,
+                color: Colors.green,
+              ),
+              onPressed: onPressedBar),
+          IconButton(
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.pink,
+              ),
+              onPressed: onPressedBar),
+          IconButton(
+              icon: const Icon(
+                Icons.child_friendly_outlined,
+                color: Colors.amber,
+              ),
+              onPressed: onPressedBar),
+        ],
       ),
       body: content,
     );
   }
 
-  Widget drawDigitField({int? initialValue, required String labelText, required ValueChanged<String> onChanged}) {
+  Widget drawDigitField({int? initialValue, required IconData icon, required String labelText, required ValueChanged<String> onChanged}) {
     final field = TextFormField(
       initialValue: initialValue?.toString(),
       decoration: InputDecoration(
+        prefixIcon: Icon(icon),
         labelText: labelText,
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.amber, width: 1.0),
@@ -136,59 +173,49 @@ class _MyHomePageState extends State<MyHomePage> {
             style: const TextStyle(fontSize: 18),
           ),
         )),
-        Row(
-          children: [
-            Expanded(
-                child: drawDigitField(
-              initialValue: priceOneKidHour,
-              labelText: "Вартість години з одним",
-              onChanged: _onPriceForOneChanged,
-            )),
-            Expanded(
-                child: drawDigitField(
-              initialValue: priceTwoKidsHour,
-              labelText: "Вартість години з двома",
-              onChanged: _onPriceForTwoChanged,
-            ))
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-                child: drawDigitField(
-              labelText: "Годин всього",
-              onChanged: _onHoursTotalChanged,
-            )),
-            Expanded(
-              child: drawDigitField(
-                labelText: "Хвилин всього",
-                onChanged: _onMinutesTotalChanged,
-              ),
-            )
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-                child: drawDigitField(
-              labelText: "З них годин з двома",
-              onChanged: _onHoursWithTwoKidsChanged,
-            )),
-            Expanded(
-              child: drawDigitField(
-                labelText: "Хвилин з двома",
-                onChanged: _onMinutesWithTwoKidsChanged,
-              ),
-            )
-          ],
-        ),
         drawDigitField(
+          icon: Icons.attach_money,
+          initialValue: priceOneKidHour,
+          labelText: "Вартість години з одним",
+          onChanged: _onPriceForOneChanged,
+        ).wrapRow([
+          drawDigitField(
+            icon: Icons.attach_money,
+            initialValue: priceTwoKidsHour,
+            labelText: "Вартість години з двома",
+            onChanged: _onPriceForTwoChanged,
+          )
+        ]),
+        drawDigitField(
+          icon: Icons.access_time_filled_outlined,
+          labelText: "Годин всього",
+          onChanged: _onHoursTotalChanged,
+        ).wrapRow([
+          drawDigitField(
+            icon: Icons.access_time_filled_outlined,
+            labelText: "Хвилин всього",
+            onChanged: _onMinutesTotalChanged,
+          )
+        ]),
+        drawDigitField(
+          icon: Icons.access_time_filled_outlined,
+          labelText: "З них годин з двома",
+          onChanged: _onHoursWithTwoKidsChanged,
+        ).wrapRow([
+          drawDigitField(
+            icon: Icons.access_time_filled_outlined,
+            labelText: "Хвилин з двома",
+            onChanged: _onMinutesWithTwoKidsChanged,
+          )
+        ]),
+        drawDigitField(
+          icon: Icons.attach_money,
           initialValue: bonusUah,
           labelText: "Бонус",
           onChanged: _onBonus,
         )
       ],
     );
-    return Padding(padding: const EdgeInsets.all(10), child: body);
+    return Padding(padding: const EdgeInsets.fromLTRB(10, 10, 10, 40), child: body);
   }
 }
