@@ -25,8 +25,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Read secrets for signing build
       run: |
-        echo "${{ secrets.B64_PROPERTIES }}" > b64
-        base64 --decode b64 > android/upload-keystore.properties
+        echo "${{ secrets.B64_PROPERTIES }}" | base64 --decode > android/upload-keystore.properties
         echo "${{ secrets.B64_RELEASE_KEY }}" > b64
         base64 --decode b64 > android/app/upload-keystore.jks
     - uses: actions/setup-java@v2
