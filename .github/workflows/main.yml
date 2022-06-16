@@ -28,7 +28,7 @@ jobs:
         echo "${{ secrets.B64_PROPERTIES }}" > b64
         base64 --decode b64 > android/upload-keystore.properties
         echo "${{ secrets.B64_RELEASE_KEY }}" > b64
-        base64 --decode b64 > app/upload-keystore.jks
+        base64 --decode b64 > android/app/upload-keystore.jks
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu'
