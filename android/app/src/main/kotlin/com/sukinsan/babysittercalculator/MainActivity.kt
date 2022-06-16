@@ -1,4 +1,4 @@
-package com.example.babysittercalculator
+package com.sukinsan.babysittercalculator
 
 import io.flutter.embedding.android.FlutterActivity
 
