@@ -23,10 +23,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v3
-    - name: Read secrets for signing build
+    - name: Read secrets into files
       run: |
         echo "${{ secrets.B64_PROPERTIES }}" | base64 --decode > android/upload-keystore.properties
         echo "${{ secrets.B64_RELEASE_KEY }}" | base64 --decode > android/app/upload-keystore.jks
+        echo "${{ secrets.GOGOLE_SERVICE_ACCOUNT_JSON }}" > gsa.json
     - uses: actions/setup-java@v2
       with:
         distribution: 'zulu'
@@ -48,7 +49,7 @@ jobs:
         path: build/app/outputs/bundle/release/
     - uses: r0adkll/upload-google-play@v1
       with:
-        serviceAccountJson: ${{ secrets.GOGOLE_SERVICE_ACCOUNT_JSON }}
+        serviceAccountJson: gsa.json
         packageName: com.sukinsan.babysittercalculator
         releaseFiles: build/app/outputs/bundle/release/app-release.aab
         track: production
