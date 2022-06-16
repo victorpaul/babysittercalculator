@@ -1,4 +1,4 @@
-# This is a basic workflow to help you get started with Actions
+# this one is super CI that does everything, just to save a bit of free tear CI time
 
 name: CI
 
@@ -36,9 +36,21 @@ jobs:
     - run: flutter test
     - run: flutter build apk --release
     - run: flutter build appbundle --release
-    - name: Save builds
+    - name: Save build apk
       uses: actions/upload-artifact@v3
       with:
         name: flutter-apk
-        path: build\app\outputs\flutter-apk
+        path: build/app/outputs/flutter-apk
+    - name: Save build aab
+      uses: actions/upload-artifact@v3
+      with:
+        name: flutter-aab
+        path: build/app/outputs/bundle/release/
+    - uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJson: ${{ secrets.GOGOLE_SERVICE_ACCOUNT_JSON }}
+        packageName: com.sukinsan.babysittercalculator
+        releaseFiles: build/app/outputs/bundle/release/app-release.aab
+        track: production
+        status: draft
 
