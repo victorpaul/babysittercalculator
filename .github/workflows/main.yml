@@ -22,8 +22,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - run: echo ${{secrets.B64_PROPERTIES}} | base64 --decode > android/upload-keystore.properties
-    - run: echo ${{secrets.B64_RELEASE_KEY}} | base64 --decode > app/upload-keystore.jks
+    - run: echo ${{ secrets.B64_PROPERTIES }} | base64 --decode > android/upload-keystore.properties
+    - run: echo ${{ secrets.B64_RELEASE_KEY }} | base64 --decode > app/upload-keystore.jks
     - uses: actions/checkout@v3
     - uses: actions/setup-java@v2
       with:
