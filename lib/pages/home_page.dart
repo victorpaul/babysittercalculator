@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:babysittercalculator/constants.dart';
 import 'package:babysittercalculator/extensions/widget_put_right.dart';
+import 'package:babysittercalculator/services/background_service.dart';
 import 'package:babysittercalculator/services/notification_service.dart';
 import 'package:babysittercalculator/utils/calculations.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +101,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onPressedBar() {
     final randIndex = Random().nextInt(positivePhrases.length - 1);
-    NotificationService.showSnackBar("Positive phrase: \"${positivePhrases[randIndex]}\"");
+    final randomPhrase = positivePhrases[randIndex];
+
+    BackgroundService.instance().then((inst) => inst.runDailyNotification(
+        DateTime.now(),
+        "com.task.daily.0",
+        {
+          "type": "notification",
+          "title": "randomPhrase",
+          "message": randomPhrase}).then((value) => NotificationService.showSnackBar(randomPhrase))
+    );
   }
 
   @override

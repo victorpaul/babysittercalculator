@@ -1,8 +1,16 @@
 import 'package:babysittercalculator/pages/home_page.dart';
+import 'package:babysittercalculator/services/background_service.dart';
 import 'package:babysittercalculator/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
+void callbackDispatcher() {
+  BackgroundService.instance().then((inst) => inst.processBackgroundTask());
+}
+
 void main() {
+  NotificationService.initialize();
+  BackgroundService.initialize();
+
   runApp(const MyApp());
 }
 
@@ -13,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      scaffoldMessengerKey: NotificationService.snackBarMessangerKey,
+      scaffoldMessengerKey: NotificationService.snackBarMessageKey,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
