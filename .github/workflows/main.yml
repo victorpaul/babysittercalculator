@@ -54,4 +54,11 @@ jobs:
         releaseFiles: build/app/outputs/bundle/release/app-release.aab
         track: production
         status: draft
+    - name: Upload artifact to Firebase App Distribution
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: romeo-papa
+        serviceCredentialsFile: gsa.json
+        groups: dev
+        file: build/app/outputs/bundle/release/app-release.aab
 
