@@ -109,7 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
         {
           "type": "notification",
           "title": "randomPhrase",
-          "message": randomPhrase}).then((value) => NotificationService.showSnackBar(randomPhrase))
+          "message": randomPhrase}).then((value) {
+            NotificationService.showSnackBar(randomPhrase);
+            NotificationService.instance().then((value) => value
+                .notification(-1, "local", randomPhrase));
+          })
     );
   }
 

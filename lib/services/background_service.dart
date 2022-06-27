@@ -21,16 +21,14 @@ class BackgroundService {
       print("inputData ${inputData.toString()}");
       if(inputData == null) return true;
 
-      final taskType = inputData["type"];
 
-      if (taskType == "notification") {
         final title = inputData["title"] ?? "Unknown title";
         final message = inputData["message"] ?? "Unknown message";
 
         NotificationService.instance().then((instance) =>
-            instance.notification(null, title, message+" " + DateTime.now().toIso8601String()));
+            instance.notification(-1, title, message+" " + DateTime.now().toIso8601String()));
 
-      }
+
       return true;
     });
   }
@@ -41,8 +39,8 @@ class BackgroundService {
     return Workmanager().registerPeriodicTask(
         name,
         name,
-        frequency: const Duration(hours: 1),
-        initialDelay: const Duration(seconds: 5),
+        frequency: const Duration(minutes: 15),
+        initialDelay: const Duration(seconds: 15),
         inputData: inputData);
   }
 }

@@ -2,13 +2,9 @@ import 'package:babysittercalculator/pages/home_page.dart';
 import 'package:babysittercalculator/services/background_service.dart';
 import 'package:babysittercalculator/services/notification_service.dart';
 import 'package:flutter/material.dart';
-
-void callbackDispatcher() {
-  BackgroundService.instance().then((inst) => inst.processBackgroundTask());
-}
+import 'package:workmanager/workmanager.dart';
 
 void main() {
-  NotificationService.initialize();
   BackgroundService.initialize();
 
   runApp(const MyApp());
@@ -38,4 +34,19 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'Оплата Няні'),
     );
   }
+}
+
+void callbackDispatcher() {
+  // BackgroundService.instance().then((inst) => inst.processBackgroundTask());
+  Workmanager().executeTask((task, inputData) async {
+    if(inputData == null) return Future.value(false);
+
+
+    final title = inputData["title"] ?? "Unknown title";
+    final message = inputData["message"] ?? "Unknown message";
+
+    await NotificationService().notification(-1, title, message+" " + DateTime.now().toIso8601String());
+
+    return Future.value(true);
+  });
 }

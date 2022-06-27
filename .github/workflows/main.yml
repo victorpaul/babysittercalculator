@@ -47,18 +47,19 @@ jobs:
       with:
         name: flutter-aab
         path: build/app/outputs/bundle/release/
+#     https://github.com/r0adkll/upload-google-play
     - uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJson: gsa.json
         packageName: com.sukinsan.babysittercalculator
         releaseFiles: build/app/outputs/bundle/release/app-release.aab
-        track: production
-        status: draft
-    - name: Upload artifact to Firebase App Distribution
-      uses: wzieba/Firebase-Distribution-Github-Action@v1
-      with:
-        appId: romeo-papa
-        serviceCredentialsFile: gsa.json
-        groups: dev
-        file: build/app/outputs/bundle/release/app-release.aab
+        track: internal
+        status: completed
+#    - name: Upload artifact to Firebase App Distribution
+#      uses: wzieba/Firebase-Distribution-Github-Action@v1
+#      with:
+#        appId: romeo-papa
+#        serviceCredentialsFile: gsa.json
+#        groups: dev
+#        file: build/app/outputs/bundle/release/app-release.aab
 
