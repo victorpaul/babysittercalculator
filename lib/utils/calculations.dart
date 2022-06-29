@@ -8,7 +8,6 @@ String calculateBabysitterPayment(
     required int minutesTotal,
     required int minutesWithTwoKids,
     required int bonusUah}) {
-
   final totalTimeInMinutes = hoursTotal * 60 + minutesTotal;
   final totalWithTwoKidsInMinutes = hoursWithTwoKids * 60 + minutesWithTwoKids;
   final totalWithOneKidInMinutes = totalTimeInMinutes - totalWithTwoKidsInMinutes;
@@ -30,4 +29,15 @@ ${bonusUah.toStringAsFixed(1)} грн бонус
 
 Всього:  ${total.toStringAsFixed(1)} грн
 """;
+}
+
+int calculateDelayToStartInMinutes(DateTime now, DateTime startAt) {
+  final nowMinutes = now.hour * 60 + now.minute;
+  final startAtMinutes = startAt.hour * 60 + startAt.minute * 60;
+  const minutesInDay = 60 * 24;
+
+  if (nowMinutes > startAtMinutes) {
+    return minutesInDay - nowMinutes + startAtMinutes;
+  }
+  return startAtMinutes - nowMinutes;
 }

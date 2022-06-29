@@ -72,8 +72,7 @@ class NotificationService {
       android: androidPlatformChannelSpecifics,
     );
     return flutterLocalNotificationsPlugin.show(
-        0, 'plain title', null, platformChannelSpecifics,
-        payload: 'item x');
+        0, title, message, platformChannelSpecifics);
 
   }
 }

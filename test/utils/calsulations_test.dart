@@ -93,4 +93,25 @@ void main() {
 Загальний час 01:10, це менший ніж час з двома 02:00""");
     });
   });
+
+  group("check method calculateDelayToStartInSeconds",(){
+    test("success calculate start delay for 18:00 at 21:30", () {
+      final r = calculateDelayToStartInMinutes(
+        DateTime(0,0,0,21,30),
+        DateTime(0,0,0,18,0)
+      );
+
+      expect(60 * 20 + 30, r); // 20:30
+    });
+
+    test("success calculate start delay for 18:00 at 17:45", () {
+      final r = calculateDelayToStartInMinutes(
+          DateTime(0,0,0,17,45),
+          DateTime(0,0,0,18,0)
+      );
+
+      expect(15, r ); // 00:15
+    });
+
+  });
 }

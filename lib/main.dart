@@ -4,8 +4,9 @@ import 'package:babysittercalculator/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:workmanager/workmanager.dart';
 
-void main() {
-  BackgroundService.initialize();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await BackgroundService.initialize();
 
   runApp(const MyApp());
 }
@@ -40,7 +41,6 @@ void callbackDispatcher() {
   // BackgroundService.instance().then((inst) => inst.processBackgroundTask());
   Workmanager().executeTask((task, inputData) async {
     if(inputData == null) return Future.value(false);
-
 
     final title = inputData["title"] ?? "Unknown title";
     final message = inputData["message"] ?? "Unknown message";
