@@ -104,11 +104,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final randomPhrase = positivePhrases[randIndex];
 
     BackgroundService.instance().then((inst) async {
-      await inst.runDailyTask(DateTime(0,0,0,22,35), "com.task.daily.0", {"type": "notification", "title": "22:35", "message": randomPhrase});
-      await inst.runDailyTask(DateTime(0,0,0,17,00), "com.task.daily.1", {"type": "notification", "title": "17:00", "message": randomPhrase});
-      await inst.runDailyTask(DateTime(0,0,0,23,00), "com.task.daily.2", {"type": "notification", "title": "23:00", "message": randomPhrase});
-      await inst.runDailyTask(DateTime(0,0,0,23,30), "com.task.daily.3", {"type": "notification", "title": "23:30", "message": randomPhrase});
-      await inst.runDailyTask(DateTime(0,0,0,7,0),   "com.task.daily.4", {"type": "notification", "title": "morning", "message": randomPhrase});
+      await inst.runDailyTask(DateTime(0,0,0,19,20), "com.task.daily.0", {"type": "notification", "title": "19:20", "message": randomPhrase});
+      await inst.runDailyTask(DateTime(0,0,0,20,30), "com.task.daily.1", {"type": "notification", "title": "20:30", "message": randomPhrase});
+      await inst.runDailyTask(DateTime(0,0,0,19,30), "com.task.daily.2", {"type": "notification", "title": "19:30", "message": randomPhrase});
+      await inst.runDailyTask(DateTime(0,0,0,20,01), "com.task.daily.3", {"type": "notification", "title": "20:01", "message": randomPhrase});
+      await inst.runDailyTask(DateTime(0,0,0,21,01), "com.task.daily.4", {"type": "notification", "title": "21:01", "message": randomPhrase});
 
       NotificationService.showSnackBar(randomPhrase);
       NotificationService.instance().then((value) => value.notification(-1, "local", randomPhrase));

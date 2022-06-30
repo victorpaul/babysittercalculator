@@ -33,7 +33,7 @@ ${bonusUah.toStringAsFixed(1)} грн бонус
 
 int calculateDelayToStartInMinutes(DateTime now, DateTime startAt) {
   final nowMinutes = now.hour * 60 + now.minute;
-  final startAtMinutes = startAt.hour * 60 + startAt.minute * 60;
+  final startAtMinutes = startAt.hour * 60 + startAt.minute;
   const minutesInDay = 60 * 24;
 
   if (nowMinutes > startAtMinutes) {

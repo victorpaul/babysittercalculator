@@ -17,23 +17,6 @@ class BackgroundService {
     );
   }
 
-  void processBackgroundTask() {
-    Workmanager().executeTask((task, inputData) async {
-      print("inputData ${inputData.toString()}");
-      if(inputData == null) return true;
-
-
-        final title = inputData["title"] ?? "Unknown title";
-        final message = inputData["message"] ?? "Unknown message";
-
-        NotificationService.instance().then((instance) =>
-            instance.notification(-1, title, message+" " + DateTime.now().toIso8601String()));
-
-
-      return true;
-    });
-  }
-
   Future<void> runDailyTask(DateTime start, String name, Map<String, dynamic> inputData) async {
     final delayToStartInMinutes = calculateDelayToStartInMinutes(DateTime.now(),start);
 

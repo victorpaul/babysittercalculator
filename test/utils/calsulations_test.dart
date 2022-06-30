@@ -100,17 +100,16 @@ void main() {
         DateTime(0,0,0,21,30),
         DateTime(0,0,0,18,0)
       );
-
       expect(60 * 20 + 30, r); // 20:30
     });
 
     test("success calculate start delay for 18:00 at 17:45", () {
       final r = calculateDelayToStartInMinutes(
           DateTime(0,0,0,17,45),
-          DateTime(0,0,0,18,0)
+          DateTime(0,0,0,18,5)
       );
 
-      expect(15, r ); // 00:15
+      expect(20, r ); // 00:15
     });
 
   });
