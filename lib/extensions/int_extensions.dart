@@ -4,4 +4,9 @@ extension IntExtension on int {
     final minutes = (this % 60).toString().padLeft(2, "0");
     return "$hours:$minutes";
   }
+
+  Duration minutesToDuration() {
+
+    return Duration(minutes: this);
+  }
 }

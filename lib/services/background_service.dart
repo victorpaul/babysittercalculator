@@ -1,10 +1,9 @@
+import 'package:babysittercalculator/extensions/int_extensions.dart';
 import 'package:babysittercalculator/main.dart';
-import 'package:babysittercalculator/services/notification_service.dart';
 import 'package:babysittercalculator/utils/calculations.dart';
 import 'package:workmanager/workmanager.dart';
 
 class BackgroundService {
-
   // todo, pass Workmanager to make it testable
   static Future<BackgroundService> instance() {
     return Future.value(BackgroundService());
@@ -17,17 +16,11 @@ class BackgroundService {
     );
   }
 
-  Future<void> runDailyTask(DateTime start, String name, Map<String, dynamic> inputData) async {
-    final delayToStartInMinutes = calculateDelayToStartInMinutes(DateTime.now(),start);
+  Future<String> runDailyTask(DateTime start, String name, Map<String, dynamic> inputData) async {
+    final delayToStartInMinutes = calculateDelayToStartInMinutes(DateTime.now(), start);
 
     await Workmanager().cancelByUniqueName(name);
-    return Workmanager().registerPeriodicTask(
-        name,
-        name,
-        frequency: const Duration(days: 1),
-        initialDelay: Duration(minutes: delayToStartInMinutes),
-        inputData: inputData);
+    await Workmanager().registerPeriodicTask(name, name, frequency: const Duration(minutes: 30), initialDelay: delayToStartInMinutes.minutesToDuration(), inputData: inputData);
+    return Future.value("$name runs in ${delayToStartInMinutes.toString()}");
   }
 }
-
-
